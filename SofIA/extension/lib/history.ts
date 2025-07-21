@@ -1,5 +1,7 @@
 import { Storage } from "@plasmohq/storage";
 import type { VisitData, SessionData, PageMetrics } from "~types/history";
+import type { BehaviorData} from "~types/history";
+
 
 export class HistoryManager {
   private readonly STORAGE_KEY = 'sofia_history';
@@ -292,6 +294,27 @@ export class HistoryManager {
     }
   }
 
+// Enregistrer un comportement détecté (vidéo, audio, article lu, etc.)
+public async recordBehavior(data: BehaviorData): Promise<void>{
+  const visitData = this.history.get(data.url);
+  if (!visitData) return;
+
+  const latestSession = visitData.sessions[visitData.sessions.length - 1];
+  if (!latestSession) return;
+
+  // Ajout basique dans la dernière session — tu peux améliorer ce modèle
+  const metadata: Record<string, any> = {};
+
+  if (data.videoPlayed) metadata.video = { played: true, duration: data.videoDuration };
+  if (data.audioPlayed) metadata.audio = { played: true, duration: data.audioDuration };
+  if (data.articleRead) metadata.article = { title: data.title, readTime: data.readTime };
+
+  (latestSession as any).behavior = metadata;
+
+  this.history.set(data.url, visitData);
+  await this.saveHistory();
+}
+
   // Vider tout l'historique
   public async clearAll(): Promise<void> {
     this.history.clear();
@@ -299,3 +322,4 @@ export class HistoryManager {
     await this.storage.remove(this.STORAGE_KEY);
   }
 }
+

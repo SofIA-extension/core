@@ -1,25 +1,26 @@
 {
   "extends": "./node_modules/plasmo/templates/tsconfig.base.json",
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    ".plasmo/index.d.ts",
-    "./**/*.ts",
-    "./**/*.tsx",
-    "../types.d.ts"
-  ],
   "compilerOptions": {
-    "paths": {
-      "~*": [
-        "./*"
-      ]
-    },
-    "baseUrl": ".",
-    "jsx": "react-jsx",
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["chrome", "react"],
+    "paths": {
+      "~*": ["./*"]
+    }
+  },
+  "include": [
+    ".plasmo/index.d.ts",
+    "../types.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": ["node_modules"]
 }

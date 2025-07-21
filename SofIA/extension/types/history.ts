@@ -66,3 +66,15 @@ export interface PageMetrics {
   timestamp: number;
   duration: number;
 }
+
+export interface BehaviorData {
+  url: string;
+  timestamp: number;
+  videoPlayed?: boolean;
+  videoDuration?: number;
+  audioPlayed?: boolean;
+  audioDuration?: number;
+  articleRead?: boolean;
+  title?: string;
+  readTime?: number;
+}

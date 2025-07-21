@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useStorage } from "@plasmohq/storage/hook";
 
 interface TrackingStatusProps {
